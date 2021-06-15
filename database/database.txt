@@ -1,0 +1,7 @@
+{ 
+    name: aneeqah, 
+    email: aneeqahjones2@gmail.com, 
+    address: 7 celery road, 
+    player id: : 9603050377086, 
+    id number: 6807730503069 
+}

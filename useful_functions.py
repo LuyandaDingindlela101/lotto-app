@@ -25,7 +25,7 @@ def test_empty(test_entry):
 
 def test_email(test_entry):
     email = test_entry.strip().lower()
-    if not "@" in email:
+    if "@" not in email:
         print("Invalid email")
         return False
     elif not email[-4:] in ".com.org.edu.gov.net":
@@ -68,3 +68,13 @@ def write_to_file(to_write):
             file_to_save.write(to_write)
     except TypeError:
         messagebox.showerror("Type Error", TypeError)
+
+
+def generate_lotto_number():
+    import random
+    return random.randint(1, 49)
+
+
+
+
+generate_lotto_number()
