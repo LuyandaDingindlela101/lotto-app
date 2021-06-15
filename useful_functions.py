@@ -48,6 +48,7 @@ def test_id_number(id_number):
 def clear_entry(test_entry):
     test_entry.delete(0, END)
 
+
 #   THIS FUNCTION WILL CLOSE THE PROGRAM ON CLICK OF THE exit_btn
 def exit_program(window):
     message_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit', icon='warning')
@@ -56,3 +57,14 @@ def exit_program(window):
     else:
         #   ELSE, JUST GO BACK TO THE APPLICATION SCREEN
         pass
+
+
+#   FUNCTION WILL WRITE TO A FILE
+def write_to_file(to_write):
+    try:
+        # OPEN THE database.txt FILE WITH APPEND PRIVILEGES AND THE + MEANS THAT IT WILL CREATE THE FILE IF IT
+        # DOESN'T EXIST
+        with open("./database/database.txt", "a+") as file_to_save:
+            file_to_save.write(to_write)
+    except TypeError:
+        messagebox.showerror("Type Error", TypeError)

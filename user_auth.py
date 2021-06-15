@@ -9,11 +9,42 @@ window.title("Ithuba National Lottery")
 window.geometry("550x500")
 
 
-#   FUNCTION CLEARS ALL THE ENTRIES CONTENTS
-def clear_entries():
-    #   CALL THE clear_entry() FUNCTION TO CLEAR THE ENTRIES
-    clear_entry(username_entry)
-    clear_entry(address_entry)
+def login():
+    if validate_entries():
+        check_age()
+
+
+#   FUNCTION WILL VALIDATE ALL ENTRIES
+def validate_entries():
+    #   GET ALL ENTRIES
+    name = username_entry.get()
+    email = email_entry.get()
+    address = address_entry.get()
+    id_number = id_entry.get()
+
+    #   TEST IF ALL THE INPUTS ARENT EMPTY
+    if test_empty(name) and test_empty(email) and test_empty(address) and test_empty(id_number):
+        #   MAKE SURE THE name ENTRY IS ONLY STRING AND MAKE THE id_number IS VALID
+        if test_type(name):
+            if test_id_number(id_number):
+                #   GENERATE A payer_id BY REVERSING THE id_number
+                player_id = id_number[::-1]
+                #   CREATE A Person OBJECT WITH THE USERS DETAILS
+                person = Person(name, email, address, player_id, id_number)
+                #   SAVE ALL THE DATA TO A TEXT FILE
+                write_to_file(str(person))
+                return True
+            #   IF THE id_number IS INVALID, DISPLAY ERROR TO USER
+            else:
+                messagebox.showerror("Id Invalid", "Invalid ID number. Try again")
+        #   IF THE name ENTRY HAS ANYTHING THAT ISN'T STRING
+        else:
+            messagebox.showerror("Type Error", "Please check the name and id number entries")
+            return False
+    #   IF ENTRIES ARE EMPTY, DISPLAY ERROR TO USER
+    else:
+        messagebox.showerror("Empty Entries", "Entries cannot be empty")
+        return False
 
 
 #   FUNCTION WILL CHECK AGE AND DETERMINE IF THE USER CAN CONTINUE INSIDE OR NOT.
@@ -22,7 +53,7 @@ def check_age():
     import rsaidnumber
     #   IMPORT THE date FROM THE datetime MODULE
     from datetime import date
-    #   GET TODAYS DATE
+    #   GET TODAY'S DATE
     today = date.today()
     #   GET THE USERS id_number
     id_number = id_entry.get()
@@ -32,43 +63,32 @@ def check_age():
         id_number = rsaidnumber.parse(id_number)
         date_of_birth = id_number.date_of_birth
         difference = relativedelta(today, date_of_birth.date())
-        age = difference.years
+        age = int(difference.years)
 
         if age >= 18:
             messagebox.showinfo("Age Verification", "Lets Play")
             window.destroy()
             import lotto_input
         else:
-            messagebox.showerror("Age Verification", "You are too young to play. Please try again in " + 18 - age + " years”")
+            messagebox.showerror("Age Verification",
+                                 "You are too young to play. Please try again in " + 18 - age + " years”")
     else:
         print("id not valid")
 
 
+#   FUNCTION CLEARS ALL THE ENTRIES CONTENTS
+def clear_entries():
+    #   CALL THE clear_entry() FUNCTION TO CLEAR THE ENTRIES
+    clear_entry(id_entry)
+    clear_entry(email_entry)
+    clear_entry(address_entry)
+    clear_entry(username_entry)
+
+
+#   FUNCTION WILL EXIT THE PROGRAM
 def exit_app():
+    #   CALL THE exit_program() TO EXIT THE PROGRAM AND PASS IN THE CURRENT window
     exit_program(window)
-
-
-def validate_entries():
-    name = username_entry.get()
-    email = email_entry.get()
-    address = address_entry.get()
-    id_number = id_entry.get()
-
-    #   TEST IF ALL THE INPUTS ARENT EMPTY
-    if test_empty(name) and test_empty(email) and test_empty(address) and test_empty(id_number):
-        if test_type(name) and test_id_number(id_number):
-            player_id = id_number[::-1]
-            print(player_id)
-            person = Person(name, email, address, player_id, id_number)
-            print(person)
-        else:
-            messagebox.showerror("Type Error", "Please check the name and id number entries")
-    else:
-        messagebox.showerror("Empty Entries", "Entries cannot be empty")
-
-
-def login():
-    check_age()
 
 
 username_label = Label(window, text="Please enter your name", fg="blue")
