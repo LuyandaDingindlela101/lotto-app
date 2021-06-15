@@ -5,7 +5,11 @@ window = Tk()
 window.title("Ithuba National Lottery")
 window.geometry("550x500")
 
+y_axis = 250
+user_sets = []
 
+
+#   FUNCTION GETS AND RETURNS RANDOM NUMBERS
 def get_lotto_numbers():
     #   CREATE AN EMPTY LIST TO HOLD THE Lotto_numbers
     lotto_numbers = []
@@ -24,24 +28,33 @@ def get_lotto_numbers():
     return lotto_numbers
 
 
+#   GET THE VALUES FROM THE SPIN BOXES AND RETURN THEM AS A LIST
 def get_values():
-    lotto_set = []
+    global user_sets
+    #   FIRST, CHECK IF ALL THE SPIN BOXES ARENT EMPTY
+    if test_empty(number_one.get()) and test_empty(number_two.get()) and test_empty(number_three.get()) and test_empty(number_four.get()) and test_empty(number_five.get()) and test_empty(number_six.get()):
+        #   GET THE VALUES OF THE SPIN BOXES AND ADD THEM TO THE lotto_set
+        lotto_set = [
+            number_one.get(),
+            number_two.get(),
+            number_three.get(),
+            number_four.get(),
+            number_five.get(),
+            number_six.get()
+        ]
 
-    lotto_set.append(number_one.get())
-    lotto_set.append(number_two.get())
-    lotto_set.append(number_three.get())
-    lotto_set.append(number_four.get())
-    lotto_set.append(number_five.get())
-    lotto_set.append(number_six.get())
-
-    display_user_sets(lotto_set)
+    #   UPDATE THE user_sets LIST SO WE CAN SAVE IT TO THE DATABASE LATER
+    user_sets.append(lotto_set)
+    return lotto_set
 
 
+#   GETS THE VALUES AND DISPLAYS THEM TO THE USER
 def play_new_set():
-    # SHOW THE PREV SETS AND ADD NEW SETS
-    get_values()
+    #   GET THE VALUES OF THE LOTTO SETS AND DISPLAY TO THE USER
+    display_user_sets(get_values())
 
 
+#   CLEAR THE VALUES OF THE SPIN BOXES
 def clear_entries():
     clear_entry(number_one)
     clear_entry(number_two)
@@ -51,6 +64,7 @@ def clear_entries():
     clear_entry(number_six)
 
 
+#   EXIT THE PROGRAM
 def exit():
     exit_program(window)
 
@@ -59,8 +73,12 @@ def play_lotto():
     pass
 
 
+#   CREATE A LABEL AND DISPLAY THE NEW LOTTO SET TO THE USER
 def display_user_sets(set):
-    set_label = Label(window, text=set, fg="blue")
+    global y_axis
+
+    set_label = Label(window, text=set, fg="blue").place(x=10, y=y_axis)
+    y_axis = y_axis + 50
 
 
 instructions_label = Label(window, text="Choose your lucky numbers", fg="blue")

@@ -1,7 +1,1 @@
-{ 
-    name: aneeqah, 
-    email: aneeqahjones2@gmail.com, 
-    address: 7 celery road, 
-    player id: : 9603050377086, 
-    id number: 6807730503069 
-}
+{name: Luyanda Dingindlela, email: LuyandaDingindlela@gmail.com, address: 23 Tambotie Str., player id: : 9903155793082, id number: 2803975513099 }
