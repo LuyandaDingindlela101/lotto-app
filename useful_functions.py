@@ -70,11 +70,28 @@ def write_to_file(to_write):
         messagebox.showerror("Type Error", TypeError)
 
 
+#   FUNCTION WILL READ THE DATABASE FILE AND RETURN CONTENTS AS A LIST
+def read_database_file():
+    #   EMPTY LIST WILL HOLD FILE CONTENTS
+    line_list = []
+
+    try:
+        #   OPEN THE database.txt FILE
+        with open("./database/database.txt", "r") as file_to_read:
+            #   LOOP THROUGH THE file_to_read
+            for line in file_to_read:
+                #   APPEND EACH line TO THE line_list
+                line_list.append(line)
+
+            #   RETURN THE line_list
+            return line_list
+    #     CATCH THE EXCEPTION IF THE FILE ISN'T FOUND
+    except FileNotFoundError:
+        messagebox.showerror("File Error", "Wrong file or file path")
+
+
 def generate_lotto_number():
     import random
     return random.randint(1, 49)
 
 
-
-
-generate_lotto_number()

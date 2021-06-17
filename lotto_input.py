@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 from useful_functions import *
 
@@ -69,8 +70,17 @@ def exit():
     exit_program(window)
 
 
+#   FUNCTION WILL ADD TO database FILE AND IMPORT THE NEXT SCREEN
 def play_lotto():
-    pass
+    #   GET ACCESS TO THE global user_sets
+    global user_sets
+    #   UPDATE THE VALUE OF THE user_sets
+    user_sets = ", user sets: " + str(user_sets)
+    #   WRITE TO THE database FILE
+    write_to_file(str(user_sets))
+    #   DESTROY THE CURRENT window AND IMPORT THE NEXT window
+    window.destroy()
+    import  lotto_results
 
 
 #   CREATE A LABEL AND DISPLAY THE NEW LOTTO SET TO THE USER
@@ -110,7 +120,5 @@ play_btn = Button(window, text="Play Lotto", command=play_lotto, fg="blue", widt
 
 heading_label = Label(window, text="Your lotto sets: ", fg="blue")
 heading_label.place(x=10, y=200)
-
-print(get_lotto_numbers())
 
 window.mainloop()

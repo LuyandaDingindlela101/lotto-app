@@ -30,7 +30,7 @@ def validate_entries():
                 #   GENERATE A payer_id BY REVERSING THE id_number
                 player_id = id_number[::-1]
                 #   CREATE A Person OBJECT WITH THE USERS DETAILS
-                person = Person(name, email, address, player_id, id_number)
+                person = Person(name, email, address, id_number, player_id)
                 #   SAVE ALL THE DATA TO A TEXT FILE
                 write_to_file(str(person))
                 return True
