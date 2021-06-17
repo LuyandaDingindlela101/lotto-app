@@ -1,4 +1,3 @@
-import json
 from tkinter import *
 from useful_functions import *
 
@@ -74,20 +73,22 @@ def exit():
 def play_lotto():
     #   GET ACCESS TO THE global user_sets
     global user_sets
-    #   UPDATE THE VALUE OF THE user_sets
-    user_sets = ", user sets: " + str(user_sets)
-    #   WRITE TO THE database FILE
-    write_to_file(str(user_sets))
+    #   GET ALL THE DATA FROM THE database FILE
+    database_dict = read_database_file()
+    #   UPDATE THE database_dict AND ADD THE user_sets
+    database_dict["user sets"] = user_sets
+    #   UPDATE THE database FILE
+    write_to_file(database_dict)
     #   DESTROY THE CURRENT window AND IMPORT THE NEXT window
     window.destroy()
-    import  lotto_results
+    import lotto_results
 
 
 #   CREATE A LABEL AND DISPLAY THE NEW LOTTO SET TO THE USER
-def display_user_sets(set):
+def display_user_sets(lotto_set):
     global y_axis
 
-    set_label = Label(window, text=set, fg="blue").place(x=10, y=y_axis)
+    set_label = Label(window, text=lotto_set, fg="blue").place(x=10, y=y_axis)
     y_axis = y_axis + 50
 
 

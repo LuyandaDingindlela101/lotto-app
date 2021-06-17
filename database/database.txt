@@ -1,1 +1,39 @@
-{ name: Luyanda Dingindlela, email: LuyandaDingindlela@gmail.com, address: 23 Tambotie str., player id: 2803975513099, id number: 9903155793082 }, user sets: [['0', '0', '0', '0', '0', '0'], ['0', '0', '0', '0', '0', '0'], ['0', '0', '0', '0', '0', '0']]
+#   TEST ALL THE SCREENS
+#   TEST THE read_database_file FUNCTION
+
+import json
+from tkinter import messagebox
+
+object = {
+    "name": "Luyanda Dingindlela",
+    "email": "LuyandaDingindlela@gmail.com", "address": "23 Tambotie str.",
+    "player_id": "2803975513099",
+    "id_number": "9903155793082"
+}
+
+
+def write_to_file(object_param):
+    json_object = json.dumps(object_param)
+    print(type(json_object))
+
+    try:
+        with open("text.txt", "w+") as text_file:
+            text_file.write(json_object)
+    except FileNotFoundError:
+        messagebox.showerror("File Error", "Wrong file or file path")
+
+
+def read_from_file():
+    try:
+        with open("text.txt", "r", encoding='utf-8-sig', errors='ignore') as text_file:
+            dict_object = json.load(text_file, strict=False)
+            return dict_object
+    except FileNotFoundError:
+        messagebox.showerror("File Error", "Wrong file or file path")
+
+
+database_object = read_from_file()
+print(database_object)
+
+database_object["user sets"] = [[1, 5, 67, 5, 8, 3], [1, 5, 67, 5, 8, 3], [1, 5, 67, 5, 8, 3]]
+write_to_file(database_object)

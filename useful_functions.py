@@ -1,3 +1,4 @@
+import json
 from tkinter import messagebox, END
 
 
@@ -60,31 +61,26 @@ def exit_program(window):
 
 
 #   FUNCTION WILL WRITE TO A FILE
-def write_to_file(to_write):
+def write_to_file(object_param):
+    #   TAKE THE object_param AND PARSE IT TO A JSON STRING
+    json_object = json.dumps(object_param)
+
     try:
-        # OPEN THE database.txt FILE WITH APPEND PRIVILEGES AND THE + MEANS THAT IT WILL CREATE THE FILE IF IT
+        # OPEN THE database.txt FILE WITH WRITE PRIVILEGES AND THE + MEANS THAT IT WILL CREATE THE FILE IF IT
         # DOESN'T EXIST
-        with open("./database/database.txt", "a+") as file_to_save:
-            file_to_save.write(to_write)
+        with open("./database/database.txt", "w+") as text_file:
+            text_file.write(json_object)
     except TypeError:
         messagebox.showerror("Type Error", TypeError)
 
 
-#   FUNCTION WILL READ THE DATABASE FILE AND RETURN CONTENTS AS A LIST
+#   FUNCTION WILL READ THE DATABASE FILE AND RETURN CONTENTS AS A DICTIONARY
 def read_database_file():
-    #   EMPTY LIST WILL HOLD FILE CONTENTS
-    line_list = []
-
     try:
-        #   OPEN THE database.txt FILE
-        with open("./database/database.txt", "r") as file_to_read:
-            #   LOOP THROUGH THE file_to_read
-            for line in file_to_read:
-                #   APPEND EACH line TO THE line_list
-                line_list.append(line)
-
-            #   RETURN THE line_list
-            return line_list
+        #   OPEN THE database FILE WITH READ PRIVILEGES
+        with open("./database/database.txt", "r", encoding='utf-8-sig', errors='ignore') as text_file:
+            dict_object = json.load(text_file, strict=False)
+            return dict_object
     #     CATCH THE EXCEPTION IF THE FILE ISN'T FOUND
     except FileNotFoundError:
         messagebox.showerror("File Error", "Wrong file or file path")

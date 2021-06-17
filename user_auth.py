@@ -27,12 +27,18 @@ def validate_entries():
         #   MAKE SURE THE name ENTRY IS ONLY STRING AND MAKE THE id_number IS VALID
         if test_type(name):
             if test_id_number(id_number):
-                #   GENERATE A payer_id BY REVERSING THE id_number
+                #   GENERATE A player_id BY REVERSING THE id_number
                 player_id = id_number[::-1]
-                #   CREATE A Person OBJECT WITH THE USERS DETAILS
-                person = Person(name, email, address, id_number, player_id)
+                #   CREATE A Person DICTIONARY WITH THE USERS DETAILS
+                person = {
+                    "name": name,
+                    "email": email,
+                    "address": address,
+                    "id number": id_number,
+                    "player id": player_id
+                }
                 #   SAVE ALL THE DATA TO A TEXT FILE
-                write_to_file(str(person))
+                write_to_file()
                 return True
             #   IF THE id_number IS INVALID, DISPLAY ERROR TO USER
             else:

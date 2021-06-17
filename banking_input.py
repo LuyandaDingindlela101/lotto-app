@@ -17,18 +17,18 @@ def validate_entries():
     if test_empty(acc_holder) and test_empty(acc_number) and test_empty(bank):
         if type(acc_number) == int:
             bank_details = {
-                "account holder" : acc_holder,
-                "account number" : acc_number,
-                "bank name" : bank
+                "account holder": acc_holder,
+                "account number": acc_number,
+                "bank name": bank
             }
 
             print(type(bank_details))
 
         bank_details = json.dumps(bank_details)
+        print(type(bank_details))
 
-
-
-
+        bank_details = json.load(bank_details)
+        print(type(bank_details))
 
 
 def claim():
