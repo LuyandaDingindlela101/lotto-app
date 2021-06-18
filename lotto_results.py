@@ -79,8 +79,6 @@ def determine_winnings():
         winning_set = set(winning_set)
 
         intersections = len(winning_set.intersection(user_set))
-        print(intersections)
-        # intersections = len(intersections)
 
         determine_prize(intersections)
 
@@ -136,7 +134,6 @@ lotto_label.place(x=250, y=10)
 
 display_user_sets()
 display_winning_sets()
-
 determine_winnings()
 
 window.mainloop()
