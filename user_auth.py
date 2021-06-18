@@ -38,7 +38,7 @@ def validate_entries():
                     "player id": player_id
                 }
                 #   SAVE ALL THE DATA TO A TEXT FILE
-                write_to_file()
+                write_to_file(person)
                 return True
             #   IF THE id_number IS INVALID, DISPLAY ERROR TO USER
             else:

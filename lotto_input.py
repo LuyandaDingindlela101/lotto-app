@@ -9,30 +9,12 @@ y_axis = 250
 user_sets = []
 
 
-#   FUNCTION GETS AND RETURNS RANDOM NUMBERS
-def get_lotto_numbers():
-    #   CREATE AN EMPTY LIST TO HOLD THE Lotto_numbers
-    lotto_numbers = []
-
-    #   WHILE THE lotto_numbers HAS 6 OR LESS ITEMS
-    while len(lotto_numbers) < 6:
-        #   GENERATE A RANDOM NUMBER
-        number = generate_lotto_number()
-
-        #   CHECK IF THE number IS IN THE lotto _numbers ALREADY OR NOT
-        if number not in lotto_numbers:
-            #   IF IT ISN'T, APPEND THE number TO THE Lotto_numbers LIST
-            lotto_numbers.append(number)
-
-    #   RETURN THE lotto_numbers
-    return lotto_numbers
-
-
 #   GET THE VALUES FROM THE SPIN BOXES AND RETURN THEM AS A LIST
 def get_values():
     global user_sets
     #   FIRST, CHECK IF ALL THE SPIN BOXES ARENT EMPTY
-    if test_empty(number_one.get()) and test_empty(number_two.get()) and test_empty(number_three.get()) and test_empty(number_four.get()) and test_empty(number_five.get()) and test_empty(number_six.get()):
+    if test_empty(number_one.get()) and test_empty(number_two.get()) and test_empty(number_three.get()) and test_empty(
+            number_four.get()) and test_empty(number_five.get()) and test_empty(number_six.get()):
         #   GET THE VALUES OF THE SPIN BOXES AND ADD THEM TO THE lotto_set
         lotto_set = [
             number_one.get(),
@@ -52,6 +34,8 @@ def get_values():
 def play_new_set():
     #   GET THE VALUES OF THE LOTTO SETS AND DISPLAY TO THE USER
     display_user_sets(get_values())
+    #   CLEAR THE LAST PLAYED VALUES
+    clear_entries()
 
 
 #   CLEAR THE VALUES OF THE SPIN BOXES
