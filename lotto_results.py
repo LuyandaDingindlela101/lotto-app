@@ -6,6 +6,7 @@ window.title("Ithuba National Lottery")
 window.geometry("550x500")
 
 y_axis = 50
+winnings = []
 
 
 #   CREATE A LABEL AND DISPLAY THE NEW LOTTO SET TO THE USER
@@ -19,8 +20,7 @@ def display_user_sets():
         Label(window, text=set, fg="blue").place(x=10, y=y_axis)
         y_axis = y_axis + 50
 
-    Button(window, text="Add new entry", command=play_again, fg="blue").place(x=10, y=(y_axis + 50))
-    Button(window, text="Claim Prize", command=claim_prize, fg="blue").place(x=200, y=(y_axis + 50))
+    Button(window, text="Claim Prize", command=claim_prize, fg="blue").place(x=10, y=(y_axis + 50))
     Button(window, text="Exit programme", command=exit_program, fg="blue").place(x=400, y=(y_axis + 50))
 
 
@@ -70,16 +70,55 @@ def determine_winnings():
     winning_set = database_contents["winning set"]
 
 #     NOW, WE LOOP THROUGH THE user_sets TO CHECK HOW MANY MATCHES THERE ARE
-    for set in user_sets:
-        print(set)
+    for user_set in user_sets:
+        print(user_set)
+        for i in range(0, len(user_set)):
+            user_set[i] = int(user_set[i])
+
+        user_set = set(user_set)
+        winning_set = set(winning_set)
+
+        intersections = len(winning_set.intersection(user_set))
+        print(intersections)
+        # intersections = len(intersections)
+
+        determine_prize(intersections)
 
 
-def play_again():
-    messagebox.showerror()
+def determine_prize(intersections):
+    global winnings
+
+    prizes = {
+        0: 0,
+        1: 0,
+        2: 20.00,
+        3: 100.50,
+        4: 2384.00,
+        5: 8584.00,
+        6: 1000000.00
+    }
+
+    your_prize = prizes[intersections]
+    winnings.append(int(your_prize))
 
 
 def claim_prize():
-    pass
+    total_winnings = sum(winnings)
+    messagebox.showinfo("Wins", "Congrats, your prize is : R" + str(total_winnings))
+
+    database_contents = read_database_file()
+    database_contents["total winnings"] = total_winnings
+    write_to_file(database_contents)
+
+    if total_winnings > 0:
+        convert = messagebox.askquestion("Convert Currency?", "Would you like to convert your winnings?")
+
+        if convert == "yes":
+            pass
+#             IMPORT THE CURRENCY CONVERTER SCREEN
+        else:
+            window.destroy()
+            import banking_input
 
 
 def exit_program():

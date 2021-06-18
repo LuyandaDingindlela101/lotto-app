@@ -1,1 +1,1 @@
-{"name": "Luyanda Dingindlela", "email": "Luyanda@gmail.com", "address": "23 Tambotie str.", "id number": "9903155793082", "player id": "2803975513099", "user sets": [["8", "11", "21", "22", "5", "23"], ["9", "12", "28", "30", "1", "40"]], "winning set": [14, 33, 16, 44, 2, 6]}
+{"name": "Luyanda Dingindlela", "email": "LuyandaDingindlela@gmail.com", "address": "23 Tambotie", "id number": "9903155793082", "player id": "2803975513099", "user sets": [["3", "6", "7", "10", "13", "16"], ["32", "12", "6", "23", "2", "1"]], "winning set": [13, 42, 48, 17, 44, 12]}
