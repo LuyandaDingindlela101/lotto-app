@@ -49,7 +49,7 @@ def validate_entries():
             return False
     #   IF ENTRIES ARE EMPTY, DISPLAY ERROR TO USER
     else:
-        messagebox.showerror("Empty Entries", "Entries cannot be empty")
+        messagebox.showerror("Validation", "Please check your inputs")
         return False
 
 
