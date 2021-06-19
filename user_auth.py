@@ -8,8 +8,9 @@ window = Tk()
 window.title("Ithuba National Lottery")
 window.geometry("550x500")
 
-
+#   FUNCTION WILL LOG USER IN
 def login():
+    #   IF ALL ENTRIES ARE VALID, CHECK USER AGE THEN LOG THEM IN
     if validate_entries():
         check_age()
 
