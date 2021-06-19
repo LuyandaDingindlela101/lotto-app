@@ -21,7 +21,7 @@ def display_user_sets():
         y_axis = y_axis + 50
 
     Button(window, text="Claim Prize", command=claim_prize, fg="blue").place(x=10, y=(y_axis + 50))
-    Button(window, text="Exit programme", command=exit_program, fg="blue").place(x=400, y=(y_axis + 50))
+    Button(window, text="Exit programme", command=exit, fg="blue").place(x=400, y=(y_axis + 50))
 
 
 #   GENERATE AND DISPLAY THE WINNING NUMBERS AND UPDATE THE database FILE
@@ -35,11 +35,14 @@ def display_winning_sets():
     #   UPDATE THE database_sets AND ADD THE winning sets
     database_contents["winning set"] = lotto_numbers
     #   UPDATE THE database FILE
-    print(database_contents)
-    # write_to_file(database_contents)
+    write_to_file(database_contents)
 
+    #   ADD THE lotto_numbers_label TO THE window
     lotto_numbers_label = Label(window, text=lotto_numbers, fg="blue")
     lotto_numbers_label.place(x=250, y=50)
+
+    #   CALL THE determine_winnings() FUNCTION TO INFORM THE USER HOW MUCH THEY WON
+    determine_winnings()
 
 
 #   FUNCTION GETS AND RETURNS RANDOM LOTTO NUMBERS
@@ -63,29 +66,46 @@ def get_lotto_numbers():
 
 #   FUNCTION WILL CHECK THE USERS SETS AGAINST THE WINNING SETS AND DETERMINE HOW MUCH THEY WON
 def determine_winnings():
+    match_list = []
     #   GET THE CONTENTS OF THE database FILE
     database_contents = read_database_file()
 
+    #   GET BOTH LOTTO SETS
     user_sets = database_contents["user sets"]
     winning_set = database_contents["winning set"]
 
-#     NOW, WE LOOP THROUGH THE user_sets TO CHECK HOW MANY MATCHES THERE ARE
+    #     NOW, WE LOOP THROUGH THE user_sets TO CHECK HOW MANY MATCHES THERE ARE
     for user_set in user_sets:
-        print(user_set)
+        #   CONVERT EACH DIGIT IN THE user_set TO AN INTEGER
         for i in range(0, len(user_set)):
             user_set[i] = int(user_set[i])
 
+        #   CONVERT THE user_set LIST TO A PYTHON SET
         user_set = set(user_set)
         winning_set = set(winning_set)
+        #   GET THE AMOUNT OF INTERSECTING DIGITS
+        matching_numbers = len(winning_set.intersection(user_set))
 
-        intersections = len(winning_set.intersection(user_set))
+        #   CHECK IF matching_numbers IS MORE THAN 0
+        if matching_numbers > 0:
+            #   GET THE MATCHING NUMBERS AND ADD THEM TO THE match_list
+            for item in list(winning_set.intersection(user_set)):
+                match_list.append(item)
 
-        determine_prize(intersections)
+    #   SAVE THE MATCHING NUMBERS
+    database_contents["matching numbers"] = match_list
+    #   UPDATE THE database FILE
+    write_to_file(database_contents)
+    #   CALL THE determine_prize FUNCTION
+    determine_prize(len(match_list))
 
 
+# FUNCTION WILL DETERMINE THE USERS PRIZE BASED ON THE AMOUNT OF INTERSECTIONS PER SET
 def determine_prize(intersections):
+    # ACCESS THE GLOBAL winnigs VARIABLE
     global winnings
 
+    #   CREATE A DICTIONARY TO STORE THE prizes AND THE AMOUNT OF INTERSECTIONS NEEDED
     prizes = {
         0: 0,
         1: 0,
@@ -96,31 +116,59 @@ def determine_prize(intersections):
         6: 1000000.00
     }
 
-    your_prize = prizes[intersections]
-    winnings.append(int(your_prize))
+    prize = prizes[intersections]
+    #   CONVERT AND ADD EACH PRIZE TO THE winnings LIST
+    winnings.append(int(prize))
 
 
+#   FUNCTION WILL SAVE THE TOTAL WINNINGS AND ALLOW USERS TO MOVE TO THE NEXT SCREEN OR RESTART
 def claim_prize():
-    total_winnings = sum(winnings)
-    messagebox.showinfo("Wins", "Congrats, your prize is : R" + str(total_winnings))
+    #   ACCESS THE GLOBAL winnings VARIABLE
+    global winnings
 
+    print("winnings: " + str(winnings))
+    #   total_winnings IS ALL THE winnings ADDED TOGETHER
+    total_winnings = sum(winnings)
+    print("sum of winnings: " + str(total_winnings))
+    #   SHOW THE USER THEIR total_winnings
+    if total_winnings == 0:
+        messagebox.showinfo("Status", "Unfortunately, you didn't win. Your prize is : R" + str(total_winnings))
+    else:
+        messagebox.showinfo("Status", "Congrats, your prize is : R" + str(total_winnings))
+
+    #   GET THE CONTENTS OF THE database FILE
     database_contents = read_database_file()
+    #   SAVE THE TOTAL WINNINGS
     database_contents["total winnings"] = total_winnings
+    #   UPDATE THE database FILE
     write_to_file(database_contents)
 
+    #   IF THE USER WON MORE THAN 0, THEN ASK IF THEY WANT TO CONVERT THEIR CURENCY?
     if total_winnings > 0:
         convert = messagebox.askquestion("Convert Currency?", "Would you like to convert your winnings?")
-
+        #   IF YES, THEN IMPORT THE currency_converter SCREEN
         if convert == "yes":
-            pass
-#             IMPORT THE CURRENCY CONVERTER SCREEN
+            #   IMPORT THE CURRENCY CONVERTER SCREEN
+            import currency_converter
+        #   IF NOT, THEN DESTROY THIS window AND IMPORT THE banking_input SCREEN
         else:
             window.destroy()
             import banking_input
+    #   IF THE total_winnings IS EQUAL TO OR LESS THAN 0, THEN ASK THE USER IF THE WANT TO RESTART THE GAME
+    else:
+        replay = messagebox.askquestion("Replay?", "Unfortunately, you didn't win. Would you like to play again?")
+        if replay == "yes":
+            #   RESET THE database FILE, SO THE USER CAN RESTART
+            with open("./database/database.txt", "w+") as text_file:
+                pass
+            #   IMPORT THE user_auth SCREEN
+            import user_auth
+        else:
+            window.destroy()
 
 
-def exit_program():
-    pass
+def exit():
+    exit_program()
 
 
 heading_label = Label(window, text="Your lucky numbers were: ", fg="blue")
@@ -134,6 +182,5 @@ lotto_label.place(x=250, y=10)
 
 display_user_sets()
 display_winning_sets()
-determine_winnings()
 
 window.mainloop()
