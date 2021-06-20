@@ -29,7 +29,7 @@ def display_user_sets():
 def display_winning_sets():
     #   GENERATE THE WINNING lotto_numbers
     lotto_numbers = get_lotto_numbers()
-
+    lotto_numbers.sort()
     #   SAVE THE lotto_numbers TO THE database FILE
     #   FIRST GET THE database_contents
     database_contents = read_database_file()
