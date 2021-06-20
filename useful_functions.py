@@ -13,7 +13,7 @@ def test_type(test_entry):
         return False
 
 
-def test_empty(test_entry):
+def not_empty(test_entry):
     try:
         if test_entry == "":
             raise ValueError()
@@ -24,7 +24,7 @@ def test_empty(test_entry):
         return False
 
 
-def test_email(test_entry):
+def is_email(test_entry):
     email = test_entry.strip().lower()
     if "@" not in email:
         print("Invalid email")

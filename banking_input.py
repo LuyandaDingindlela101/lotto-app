@@ -17,7 +17,7 @@ def validate_entries():
         acc_number = int(acc_number_entry.get())
         bank = banks_options.get()
 
-        if test_empty(acc_holder) and test_empty(acc_number) and test_empty(bank):
+        if not_empty(acc_holder) and not_empty(acc_number) and not_empty(bank):
             if type(acc_number) == int and len(str(acc_number)) == 10:
                 if bank in ["Capitec", "Nedbank", "First National Bank", "Standard Bank"]:
                     bank_details = {

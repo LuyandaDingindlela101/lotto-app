@@ -51,7 +51,7 @@ def convert_currency():
         from_currency = base_currency.get().upper()
         to_currency = new_currency.get().upper()
 
-        if test_empty(from_currency) and test_empty(to_currency):
+        if not_empty(from_currency) and not_empty(to_currency):
             play_sound("validation_success")
 
             database_contents = read_database_file()

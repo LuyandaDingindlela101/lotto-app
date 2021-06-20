@@ -23,31 +23,35 @@ def validate_entries():
     id_number = id_entry.get()
 
     #   TEST IF ALL THE INPUTS ARENT EMPTY
-    if test_empty(name) and test_empty(email) and test_empty(address) and test_empty(id_number):
-        #   MAKE SURE THE name ENTRY IS ONLY STRING AND MAKE THE id_number IS VALID
-        if test_type(name):
-            if test_id_number(id_number):
-                #   GENERATE A player_id BY REVERSING THE id_number
-                player_id = id_number[::-1]
-                #   CREATE A Person DICTIONARY WITH THE USERS DETAILS
-                person = {
-                    "name": name,
-                    "email": email,
-                    "address": address,
-                    "id number": id_number,
-                    "player id": player_id
-                }
-                #   SAVE ALL THE DATA TO A TEXT FILE
-                write_to_file(person)
-                play_sound("validation_success")
-                return True
-            #   IF THE id_number IS INVALID, DISPLAY ERROR TO USER
+    if not_empty(name) and not_empty(email) and not_empty(address) and not_empty(id_number):
+        #   CHECK IF email IS VALID
+        if is_email(email):
+            #   MAKE SURE THE name ENTRY IS ONLY STRING AND MAKE THE id_number IS VALID
+            if test_type(name):
+                if test_id_number(id_number):
+                    #   GENERATE A player_id BY REVERSING THE id_number
+                    player_id = id_number[::-1]
+                    #   CREATE A Person DICTIONARY WITH THE USERS DETAILS
+                    person = {
+                        "name": name,
+                        "email": email,
+                        "address": address,
+                        "id number": id_number,
+                        "player id": player_id
+                    }
+                    #   SAVE ALL THE DATA TO A TEXT FILE
+                    write_to_file(person)
+                    play_sound("validation_success")
+                    return True
+                #   IF THE id_number IS INVALID, DISPLAY ERROR TO USER
+                else:
+                    messagebox.showerror("Id Invalid", "Invalid ID number. Try again")
+            #   IF THE name ENTRY HAS ANYTHING THAT ISN'T STRING
             else:
-                messagebox.showerror("Id Invalid", "Invalid ID number. Try again")
-        #   IF THE name ENTRY HAS ANYTHING THAT ISN'T STRING
+                messagebox.showerror("Type Error", "Please check the name and id number entries")
+                return False
         else:
-            messagebox.showerror("Type Error", "Please check the name and id number entries")
-            return False
+            messagebox.showerror("Validation", "Email is not in proper format")
     #   IF ENTRIES ARE EMPTY, DISPLAY ERROR TO USER
     else:
         messagebox.showerror("Validation", "Inputs cant be empty")
