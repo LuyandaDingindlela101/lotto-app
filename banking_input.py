@@ -1,5 +1,7 @@
 #   Luyanda Dingindlela | Class 1
 from tkinter import *
+
+from bank_details import BankingDetails
 from database import *
 from smtplib import SMTP
 from useful_functions import *
@@ -21,13 +23,13 @@ def validate_entries():
         if not_empty(acc_holder) and not_empty(acc_number) and not_empty(bank):
             if type(acc_number) == int and len(str(acc_number)) == 10:
                 if bank in ["Capitec", "Nedbank", "First National Bank", "Standard Bank"]:
-                    bank_details = {
-                        "account holder": acc_holder,
-                        "account number": acc_number,
-                        "bank name": bank
-                    }
-
-                    database_contents["banking details"] = bank_details
+                    # bank_details = {
+                    #     "account holder": acc_holder,
+                    #     "account number": acc_number,
+                    #     "bank name": bank
+                    # }
+                    bank_details = BankingDetails(acc_holder, acc_number, bank)
+                    database_contents["banking details"] = bank_details.make_dict()
                     write_to_file(database_contents)
                     play_sound("validation_success")
                 else:

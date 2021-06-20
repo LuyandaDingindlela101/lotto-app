@@ -1,4 +1,4 @@
-class Person():
+class Person:
     def __init__(self, name, email, address, id_number, player_id):
         self.name = name
         self.email = email
@@ -12,4 +12,10 @@ class Person():
 
     #   MAKE A DICTIONARY FROM THE Person DETAILS
     def make_dict(self):
-        pass
+        return {
+                    "name": self.name,
+                    "email": self.email,
+                    "address": self.address,
+                    "id number": self.id_number,
+                    "player id": self.player_id
+                }

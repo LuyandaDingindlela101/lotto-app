@@ -1,6 +1,7 @@
 #   Luyanda Dingindlela | Class 1
 from tkinter import *
 from database import *
+from person import Person
 from useful_functions import *
 from dateutil.relativedelta import relativedelta
 
@@ -29,20 +30,14 @@ def validate_entries():
         #   CHECK IF email IS VALID
         if is_email(email):
             #   MAKE SURE THE name ENTRY IS ONLY STRING AND MAKE THE id_number IS VALID
-            if contains_numbers(name):
+            if not contains_numbers(name):
                 if id_valid(id_number):
                     #   GENERATE A player_id BY REVERSING THE id_number
                     player_id = id_number[::-1]
-                    #   CREATE A Person DICTIONARY WITH THE USERS DETAILS
-                    person = {
-                        "name": name,
-                        "email": email,
-                        "address": address,
-                        "id number": id_number,
-                        "player id": player_id
-                    }
+                    #   CREATE A Person DICTIONARY WITH THE USERS DETAILS FROM THE Person CLASS
+                    person = Person(name, email, address, id_number, player_id)
                     #   SAVE ALL THE DATA TO A TEXT FILE
-                    write_to_file(person)
+                    write_to_file(person.make_dict())
                     play_sound("validation_success")
                     return True
                 #   IF THE id_number IS INVALID, DISPLAY ERROR TO USER
