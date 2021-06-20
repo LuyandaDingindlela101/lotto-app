@@ -1,4 +1,5 @@
 from tkinter import *
+from database import *
 from useful_functions import *
 
 window = Tk()
@@ -126,15 +127,14 @@ def claim_prize():
     #   ACCESS THE GLOBAL winnings VARIABLE
     global winnings
 
-    print("winnings: " + str(winnings))
     #   total_winnings IS ALL THE winnings ADDED TOGETHER
     total_winnings = sum(winnings)
-    print("sum of winnings: " + str(total_winnings))
     #   SHOW THE USER THEIR total_winnings
     if total_winnings == 0:
         messagebox.showinfo("Status", "Unfortunately, you didn't win. Your prize is : R" + str(total_winnings))
     else:
-        messagebox.showinfo("Status", "Congrats, your prize is : R" + str(total_winnings))
+        messagebox.showinfo("Status", "Congrats, you got " + len(winnings) + "matching numbers. Your prize is : R" + str(total_winnings))
+        play_sound("Clapping")
 
     #   GET THE CONTENTS OF THE database FILE
     database_contents = read_database_file()
@@ -148,10 +148,13 @@ def claim_prize():
         convert = messagebox.askquestion("Convert Currency?", "Would you like to convert your winnings?")
         #   IF YES, THEN IMPORT THE currency_converter SCREEN
         if convert == "yes":
+            play_sound("page_transition")
             #   IMPORT THE CURRENCY CONVERTER SCREEN
+            window.destroy()
             import currency_converter
         #   IF NOT, THEN DESTROY THIS window AND IMPORT THE banking_input SCREEN
         else:
+            play_sound("page_transition")
             window.destroy()
             import banking_input
     #   IF THE total_winnings IS EQUAL TO OR LESS THAN 0, THEN ASK THE USER IF THE WANT TO RESTART THE GAME
@@ -162,8 +165,11 @@ def claim_prize():
             with open("./database/database.txt", "w+") as text_file:
                 pass
             #   IMPORT THE user_auth SCREEN
+            play_sound("page_transition")
+            window.destroy()
             import user_auth
         else:
+            play_sound("page_transition")
             window.destroy()
 
 

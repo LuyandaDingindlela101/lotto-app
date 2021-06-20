@@ -1,5 +1,6 @@
 import requests
 from tkinter import *
+from database import *
 from useful_functions import *
 from tkinter.ttk import Combobox
 
@@ -26,6 +27,7 @@ def proceed():
     proceed = messagebox.askquestion("Ready To Proceed?", "Are you ready to proceed?")
 
     if proceed == "yes":
+        play_sound("page_transition")
         window.destroy()
         import banking_input
     else:
@@ -50,6 +52,8 @@ def convert_currency():
         to_currency = new_currency.get().upper()
 
         if test_empty(from_currency) and test_empty(to_currency):
+            play_sound("validation_success")
+
             database_contents = read_database_file()
             amount = database_contents["total winnings"]
             #   SEND A GET REQUEST TO THE SUPPLIED URL
@@ -58,11 +62,14 @@ def convert_currency():
             json_response = response.json()
 
             #   RETURN THE CONVERTED AMOUNT
-            converted_currency = float(amount) * float(json_response["conversion_rates"][to_currency])
+            converted_winnings = float(amount) * float(json_response["conversion_rates"][to_currency])
             #   SAVE THE converted_currency TO THE database FILE
-            database_contents["converted currency"] = converted_currency
+            database_contents["converted winnings"] = converted_winnings
             #   UPDATE THE database FILE
             write_to_file(database_contents)
+
+            #     DISPLAY THE converted_currency TO THE USER
+            messagebox.showinfo("Converted Currency", "Your prize is now: " + str(converted_winnings))
         else:
             messagebox.showerror("Validation", "Please check your inputs")
     except KeyError:

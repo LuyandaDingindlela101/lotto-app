@@ -9,3 +9,7 @@ class Person():
     #   __str__ FUNCTION IS TO PRINT A STRING VERSION OF THE CLASS
     def __str__(self):
         return "\n { name: " + self.name + ", " + "email: " + self.email + ", " + "address: " + self.address + ", " + "player id: " + self.player_id + ", " + "id number: " + self.id_number + " } "
+
+    #   MAKE A DICTIONARY FROM THE Person DETAILS
+    def make_dict(self):
+        pass

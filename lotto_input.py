@@ -1,4 +1,5 @@
 from tkinter import *
+from database import *
 from useful_functions import *
 
 window = Tk()
@@ -27,6 +28,7 @@ def get_values():
 
     #   UPDATE THE user_sets LIST SO WE CAN SAVE IT TO THE DATABASE LATER
     user_sets.append(lotto_set)
+    play_sound("validation_success")
     return lotto_set
 
 
@@ -64,6 +66,7 @@ def play_lotto():
     #   UPDATE THE database FILE
     write_to_file(database_dict)
     #   DESTROY THE CURRENT window AND IMPORT THE NEXT window
+    play_sound("page_transition")
     window.destroy()
     import lotto_results
 

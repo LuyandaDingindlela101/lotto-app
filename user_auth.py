@@ -1,8 +1,7 @@
-from dateutil.relativedelta import relativedelta
-
-from person import *
 from tkinter import *
+from database import *
 from useful_functions import *
+from dateutil.relativedelta import relativedelta
 
 window = Tk()
 window.title("Ithuba National Lottery")
@@ -40,6 +39,7 @@ def validate_entries():
                 }
                 #   SAVE ALL THE DATA TO A TEXT FILE
                 write_to_file(person)
+                play_sound("validation_success")
                 return True
             #   IF THE id_number IS INVALID, DISPLAY ERROR TO USER
             else:
@@ -74,6 +74,7 @@ def check_age():
 
         if age >= 18:
             messagebox.showinfo("Age Verification", "Lets Play")
+            play_sound("page_transition")
             window.destroy()
             import lotto_input
         else:

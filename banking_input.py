@@ -1,4 +1,5 @@
 from tkinter import *
+from database import *
 from smtplib import SMTP
 from useful_functions import *
 from tkinter.ttk import Combobox
@@ -27,6 +28,7 @@ def validate_entries():
 
                     database_contents["banking details"] = bank_details
                     write_to_file(database_contents)
+                    play_sound("validation_success")
                 else:
                     messagebox.showerror("Bank Error", "Please check bank input")
             else:
@@ -59,6 +61,9 @@ def send_email():
         print("Something went wrong..", err)
     finally:
         server.close()
+        play_sound("page_transition")
+        window.destroy()
+
 
 def clear_entries():
     clear_entry(acc_holder_entry)
