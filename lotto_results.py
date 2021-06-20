@@ -54,7 +54,7 @@ def get_lotto_numbers():
     #   WHILE THE lotto_numbers HAS 6 OR LESS ITEMS
     while len(lotto_numbers) < 6:
         #   GENERATE A RANDOM NUMBER
-        number = generate_lotto_number()
+        number = generate_random_number()
 
         #   CHECK IF THE number IS IN THE lotto _numbers ALREADY OR NOT
         if number not in lotto_numbers:

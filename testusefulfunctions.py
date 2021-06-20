@@ -20,7 +20,7 @@ class TestUsefulFunctions(unittest.TestCase):
         self.assertTrue(result, "Id is invalid")
 
     def test_generate_random_number(self):
-        result = useful_functions.generate_lotto_number()
+        result = useful_functions.generate_random_number()
         self.assertTrue(result, "Something went wrong")
 
 

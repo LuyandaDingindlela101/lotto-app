@@ -1,7 +1,7 @@
 from tkinter import messagebox, END
 
 
-#   FUNCTION WILL DETERMINE IF PARAMETER CONTAINS INTEGERS
+#   FUNCTION WILL DETERMINE IF PARAMETER CONTAINS INTEGERS OR NOT
 def contains_numbers(test_entry):
     #   IMPORT THE REGULAR EXPRESSION MODULE
     import re
@@ -20,10 +20,13 @@ def contains_numbers(test_entry):
         return True
 
 
+#   FUNCTION WILL DETERMINE IF PARAMETER IS EMPTY OR NOT
 def not_empty(test_entry):
     try:
+        #   IF THE test_entry IS EMPTY, RAISE THE ValueError
         if test_entry == "":
             raise ValueError()
+        #   IF THE test_entry IS NOT EMPTY, RETURN True
         else:
             return True
     except ValueError:
@@ -31,29 +34,39 @@ def not_empty(test_entry):
         return False
 
 
+#   FUNCTION WILL DETERMINE IF PARAMETER IS A VALID EMAIL OR NOT
 def is_email(test_entry):
+    #   .strip() FUNCTION REMOVES EMPTY SPACES BEFORE AND AFTER A STRING
     email = test_entry.strip().lower()
+    #   CHECK IF THE email CONTAINS AN @ SYMBOL
     if "@" not in email:
-        print("Invalid email")
         return False
-    elif not email[-4:] in ".com.org.edu.gov.net":
-        print("Invalid email")
+    #   CHECK IF THE LAST CHARACTERS ARE ONE OF THE OPTIONS
+    elif not email[-4:] in [".com", ".org", ".edu", ".gov", ".net"]:
         return False
-    else:
-        return True
+
+    #   IF EVERYTHING CHECKS OUT, RETURN True
+    return True
 
 
+#   FUNCTION WILL DETERMINE IF PARAMETER IS A VALID ID OR NOT
 def id_valid(id_number):
+    #   IMPORT THE rsaidnumber MODULE
     import rsaidnumber
+
     try:
         id_number = rsaidnumber.parse(id_number)
+        #   .valid RETURNS TRUE OR FALSE BASED ON id_number
         return id_number.valid
     except ValueError:
         return False
 
 
-def generate_lotto_number():
+#   FUNCTION WILL GENERATE A RANDOM NUMBER
+def generate_random_number():
+    #   IMPORT THE random MODULE
     import random
+    #   RETURN A RANDOM NUMBER BETWEEN 1 - 49
     return random.randint(1, 49)
 
 
@@ -64,8 +77,9 @@ def clear_entry(test_entry):
 
 #   THIS FUNCTION WILL CLOSE THE PROGRAM ON CLICK OF THE exit_btn
 def exit_program(window):
-    message_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit', icon='warning')
-    if message_box == 'yes':
+    exit = messagebox.askquestion('Exit Application', 'Are you sure you want to exit', icon='warning')
+
+    if exit == 'yes':
         play_sound("page_transition")
         window.destroy()
     else:
@@ -73,6 +87,7 @@ def exit_program(window):
         pass
 
 
+#   FUNCTION WILL PLAY A SOUND
 def play_sound(sound):
     from playsound import playsound
     playsound("./audio/" + sound + ".mp3")
