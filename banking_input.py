@@ -72,7 +72,7 @@ def clear_entries():
 
 
 def exit():
-    exit_program()
+    exit_program(window)
 
 
 chosen_bank = StringVar()

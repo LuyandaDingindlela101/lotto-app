@@ -7,6 +7,7 @@ window = Tk()
 window.title("Ithuba National Lottery")
 window.geometry("550x500")
 
+
 #   FUNCTION WILL LOG USER IN
 def login():
     #   IF ALL ENTRIES ARE VALID, CHECK USER AGE THEN LOG THEM IN
@@ -27,8 +28,8 @@ def validate_entries():
         #   CHECK IF email IS VALID
         if is_email(email):
             #   MAKE SURE THE name ENTRY IS ONLY STRING AND MAKE THE id_number IS VALID
-            if test_type(name):
-                if test_id_number(id_number):
+            if contains_numbers(name):
+                if id_valid(id_number):
                     #   GENERATE A player_id BY REVERSING THE id_number
                     player_id = id_number[::-1]
                     #   CREATE A Person DICTIONARY WITH THE USERS DETAILS
@@ -70,7 +71,7 @@ def check_age():
     id_number = id_entry.get()
 
     #   TEST IF id_number IS VALID
-    if test_id_number(id_number):
+    if id_valid(id_number):
         id_number = rsaidnumber.parse(id_number)
         date_of_birth = id_number.date_of_birth
         difference = relativedelta(today, date_of_birth.date())

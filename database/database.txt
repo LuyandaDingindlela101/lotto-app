@@ -1,1 +1,0 @@
-{"name": "Luyanda Dingindlela ", "email": "LuyandaDingindlela@gmail.com", "address": "23 Tambotie str Forest Heights Eerste River", "id number": "9903155793082", "player id": "2803975513099", "user sets": [[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12]], "winning set": [18, 22, 23, 25, 34, 35], "matching numbers": []}

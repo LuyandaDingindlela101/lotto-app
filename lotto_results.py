@@ -133,7 +133,7 @@ def claim_prize():
     if total_winnings == 0:
         messagebox.showinfo("Status", "Unfortunately, you didn't win. Your prize is : R" + str(total_winnings))
     else:
-        messagebox.showinfo("Status", "Congrats, you got " + len(winnings) + "matching numbers. Your prize is : R" + str(total_winnings))
+        messagebox.showinfo("Status", "Congrats, your prize is : R" + str(total_winnings))
         play_sound("Clapping")
 
     #   GET THE CONTENTS OF THE database FILE
@@ -174,7 +174,7 @@ def claim_prize():
 
 
 def exit():
-    exit_program()
+    exit_program(window)
 
 
 heading_label = Label(window, text="Your lucky numbers were: ", fg="blue")
