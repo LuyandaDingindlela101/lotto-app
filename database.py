@@ -1,8 +1,9 @@
-#   FUNCTION WILL WRITE TO A FILE
+#   Luyanda Dingindlela | Class 1
 import json
 from tkinter import messagebox
 
 
+#   FUNCTION WILL WRITE TO A FILE
 def write_to_file(object_param):
     #   TAKE THE object_param AND PARSE IT TO A JSON STRING
     json_object = json.dumps(object_param)
