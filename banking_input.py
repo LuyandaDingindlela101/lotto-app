@@ -1,11 +1,10 @@
 #   Luyanda Dingindlela | Class 1
 from tkinter import *
-
-from bank_details import BankingDetails
 from database import *
 from smtplib import SMTP
 from useful_functions import *
 from tkinter.ttk import Combobox
+from classes.bank_details import BankingDetails
 
 window = Tk()
 window.title("Ithuba National Lottery")

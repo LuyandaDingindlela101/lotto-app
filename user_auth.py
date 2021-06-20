@@ -1,8 +1,8 @@
 #   Luyanda Dingindlela | Class 1
 from tkinter import *
 from database import *
-from person import Person
 from useful_functions import *
+from classes.person import Person
 from dateutil.relativedelta import relativedelta
 
 window = Tk()
@@ -80,7 +80,7 @@ def check_age():
             import lotto_input
         else:
             messagebox.showerror("Age Verification",
-                                 "You are too young to play. Please try again in " + 18 - age + " years”")
+                                 "You are too young to play. Please try again in " + str(18 - age) + " years”")
     else:
         print("id not valid")
 
