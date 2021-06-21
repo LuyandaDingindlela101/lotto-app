@@ -33,4 +33,5 @@ class TestUsefulFunctions(unittest.TestCase):
 
     def test_generate_random_number(self):
         result = useful_functions.generate_random_number()
-        self.assertTrue(result, "Something went wrong")
+        if 1 <= result >= 49:
+            self.assertTrue(result, "Something went wrong")
