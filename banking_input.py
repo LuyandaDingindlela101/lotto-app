@@ -4,6 +4,7 @@ from database import *
 from smtplib import SMTP
 from useful_functions import *
 from tkinter.ttk import Combobox
+from email.mime.multipart import MIMEMultipart
 from classes.bank_details import BankingDetails
 
 window = Tk()
@@ -43,28 +44,43 @@ def validate_entries():
 
 
 def send_email():
-    validate_entries()
+    #
+    if validate_entries():
+        database_contents = read_database_file()
 
-    database_contents = read_database_file()
-    database_contents = json.dumps(database_contents)
+        try:
+            sender_email = "luyandadingindlelaemail@gmail.com"
+            receiver_email = database_contents["email"]
+            password = "Ld0740285889"
+            message = "Congratulations, you won. \n" + "Mr " + database_contents["name"] + \
+                      ". Your player id is: " + str(database_contents["player id"]) + ", you won: R" + \
+                      str(database_contents["total winnings"]) + ". Your prize will be delivered at: " + \
+                      database_contents["address"] + ". Please have your id ready so we can confirm if " + \
+                      str(database_contents["id number"]) + " is your id. \n" + "Your lucky numbers were: " + \
+                      str(database_contents["user sets"]) + " and the winning numbers were: " + \
+                      str(database_contents["winning set"]) + ". The numbers that matched were: " + \
+                      str(database_contents["matching numbers"]) + ". Please also confirm if the account holders name: " + \
+                      database_contents["banking details"]["account holder"] + ", account number: " + \
+                      str(database_contents["banking details"]["account number"]) + " and bank name: " + \
+                      database_contents["banking details"]["bank name"] + " are correct."
 
-    try:
-        sender_email = "luyandadingindlela@gmail.com"
-        receiver_email = "lcproject101@gmail.com"
-        password = "LKKHZ5@h0m3"
-        server = SMTP('smtp.gmail.com', 587)
-        server.starttls()
+            email_options = MIMEMultipart("alternate")
+            email_options["subject"] = "Ithuba National Lottery"
 
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, 'This is a test email.')
-        print("the message has been successfully sent")
+            server = SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(sender_email, password)
 
-    except Exception as err:
-        print("Something went wrong..", err)
-    finally:
-        server.close()
-        play_sound("page_transition")
-        window.destroy()
+            server.sendmail(sender_email, receiver_email, message)
+            messagebox.showinfo("Email success", "Please check your emails")
+            window.destroy()
+
+        except Exception as err:
+            print("Something went wrong..", err)
+        finally:
+            server.close()
+            play_sound("page_transition")
+            window.destroy()
 
 
 def clear_entries():

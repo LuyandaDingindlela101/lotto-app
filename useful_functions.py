@@ -17,7 +17,6 @@ def contains_numbers(test_entry):
             return False
 
     except TypeError:
-        messagebox.showerror("Type Error", "Entry cannot contain integers")
         return True
 
 
@@ -31,7 +30,6 @@ def not_empty(test_entry):
         else:
             return True
     except ValueError:
-        messagebox.showerror("Value Error", "Cannot convert empty string")
         return False
 
 
