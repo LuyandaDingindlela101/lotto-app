@@ -1,4 +1,5 @@
 #   Luyanda Dingindlela | Class 1
+from email.mime.multipart import MIMEMultipart
 from tkinter import *
 from database import *
 from smtplib import SMTP
@@ -22,11 +23,6 @@ def validate_entries():
         if not_empty(acc_holder) and not_empty(acc_number) and not_empty(bank):
             if type(acc_number) == int and len(str(acc_number)) == 10:
                 if bank in ["Capitec", "Nedbank", "First National Bank", "Standard Bank"]:
-                    # bank_details = {
-                    #     "account holder": acc_holder,
-                    #     "account number": acc_number,
-                    #     "bank name": bank
-                    # }
                     bank_details = BankingDetails(acc_holder, acc_number, bank)
                     database_contents["banking details"] = bank_details.make_dict()
                     write_to_file(database_contents)
@@ -46,18 +42,31 @@ def send_email():
     validate_entries()
 
     database_contents = read_database_file()
-    database_contents = json.dumps(database_contents)
 
     try:
-        sender_email = "luyandadingindlela@gmail.com"
-        receiver_email = "lcproject101@gmail.com"
-        password = "LKKHZ5@h0m3"
+        sender_email = "luyandadingindlelaemail@gmail.com"
+        receiver_email = "luyandadingindlela@gmail.com"
+        password = "Ld0740285889"
+        message = "Congratulations, you won. \n" + "Mr " + database_contents["name"] + ". Your player id is: " + \
+                  str(database_contents["player id"]) + ", you won: R" + str(database_contents["total winnings"]) + \
+                  ". Your prize will be delivered at: " + database_contents["address"] + \
+                  ". Please have your id ready so we can confirm if " + str(database_contents["id number"]) + \
+                  " is your id. \n" + "Your lucky numbers were: " + str(database_contents["user sets"]) + \
+                  " and the winning numbers were: " + str(database_contents["winning set"]) + \
+                  ". Please also confirm if the account holders name: " + \
+                  database_contents["banking details"]["account holder"] + \
+                  ", account number: " + str(database_contents["banking details"]["account number"]) + \
+                  " and bank name: " + database_contents["banking details"]["bank name"] + "are correct."
+
+        email_options = MIMEMultipart("alternative")
+        email_options["Subject"] = "Ithuba National Lottery"
+
         server = SMTP('smtp.gmail.com', 587)
         server.starttls()
 
         server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, 'This is a test email.')
-        print("the message has been successfully sent")
+        server.sendmail(sender_email, receiver_email, message)
+        messagebox.showinfo("Email success", "Please check your emails")
 
     except Exception as err:
         print("Something went wrong..", err)
