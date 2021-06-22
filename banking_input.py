@@ -65,7 +65,7 @@ def send_email():
 
         try:
             sender_email = "luyandadingindlelaemail@gmail.com"
-            receiver_email = "luyandadingindlela@gmail.com"
+            receiver_email = database_contents["email"]
             password = "Ld0740285889"
             message = "Congratulations, you won. \n" + "Mr " + database_contents["name"] + ". Your player id is: " + \
                       str(database_contents["player id"]) + ", you won: R" + str(database_contents["total winnings"]) + \
