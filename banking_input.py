@@ -1,4 +1,5 @@
 #   Luyanda Dingindlela | Class 1
+from email.mime.multipart import MIMEMultipart
 from tkinter import *
 from database import *
 from smtplib import SMTP
@@ -63,48 +64,38 @@ def send_email():
         database_contents = read_database_file()
 
         try:
-            #   DO THE NORMAL SETUP
             sender_email = "luyandadingindlelaemail@gmail.com"
-            receiver_email = database_contents["email"]
+            receiver_email = "luyandadingindlela@gmail.com"
             password = "Ld0740285889"
-            message = "Congratulations, you won. \n" + "Mr " + database_contents["name"] + \
-                      ". Your player id is: " + str(database_contents["player id"]) + ", you won: R" + \
-                      str(database_contents["total winnings"]) + ". Your prize will be delivered at: " + \
-                      database_contents["address"] + ". Please have your id ready so we can confirm if " + \
-                      str(database_contents["id number"]) + " is your id. \n" + "Your lucky numbers were: " + \
-                      str(database_contents["user sets"]) + " and the winning numbers were: " + \
-                      str(database_contents["winning set"]) + ". The numbers that matched were: " + \
-                      str(database_contents["matching numbers"]) + ". Please also confirm if the account holders name: " + \
-                      database_contents["banking details"]["account holder"] + ", account number: " + \
-                      str(database_contents["banking details"]["account number"]) + " and bank name: " + \
-                      database_contents["banking details"]["bank name"] + " are correct."
+            message = "Congratulations, you won. \n" + "Mr " + database_contents["name"] + ". Your player id is: " + \
+                      str(database_contents["player id"]) + ", you won: R" + str(database_contents["total winnings"]) + \
+                      ". Your prize will be delivered at: " + database_contents["address"] + \
+                      ". Please have your id ready so we can confirm if " + str(database_contents["id number"]) + \
+                      " is your id. \n" + "Your lucky numbers were: " + str(database_contents["user sets"]) + \
+                      " and the winning numbers were: " + str(database_contents["winning set"]) + \
+                      ". Please also confirm if the account holders name: " + \
+                      database_contents["banking details"]["account holder"] + \
+                      ", account number: " + str(database_contents["banking details"]["account number"]) + \
+                      " and bank name: " + database_contents["banking details"]["bank name"] + "are correct."
 
-            #   ADD THE email_options
-            email_options = MIMEMultipart("alternate")
-            email_options["subject"] = "Ithuba National Lottery"
+            email_options = MIMEMultipart("alternative")
+            email_options["Subject"] = "Ithuba National Lottery"
 
-            #   OPEN A SERVER ON PORT 587
             server = SMTP('smtp.gmail.com', 587)
             server.starttls()
-            #   LOGIN WITH sender_email AND password
-            server.login(sender_email, password)
 
-            #   SEND THE EMAL
+            server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, message)
-            #   SHOW THE USER THAT IT WAS SENT
             messagebox.showinfo("Email success", "Please check your emails")
-            window.destroy()
 
         except Exception as err:
             print("Something went wrong..", err)
         finally:
-            #   CLOSE THE server
             server.close()
             play_sound("page_transition")
             window.destroy()
 
 
-#   FUNCTION WILL CLEAR ALL THE ENTRIES
 def clear_entries():
     clear_entry(acc_holder_entry)
     clear_entry(acc_number_entry)
